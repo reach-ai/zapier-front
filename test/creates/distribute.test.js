@@ -9,14 +9,19 @@ zapier.tools.env.inject();
 
 describe('creates.distribute', () => {
   it('should run', async () => {
-    const bundle = { inputData: {
-      text: "zapier text" + Date.now(),
-      link: "https://agentfoocus.com"
-    } };
+    const bundle = {
+      authData: {
+        apiKey: process.env.DREAM_API_KEY
+      },
+      inputData: {
+        text: "zapier text" + Date.now(),
+        link: "https://agentfoocus.com"
+      }
+    };
 
     const results = await appTester(App.creates.distribute.operation.perform, bundle);
     console.log("TEST RESULT: ", results)
-    should(results.tweet_url).startWith('https://twitter.com')
+    should(results.content_urls[0]).startWith('https://twitter.com')
     // TODO: add more assertions
   });
 });
